@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from './Button/Button';
 import { DatePicker } from './DatePicker/DatePicker';
 import type { DateRange } from './DatePicker/DatePicker.types';
+import { Input, InputList } from './Input';
 
 const meta: Meta = {
   title: 'Design System/Themes Showcase',
@@ -19,6 +20,8 @@ const ThemesShowcase = () => {
     startDate: new Date(),
     endDate: new Date(new Date().setDate(new Date().getDate() + 5)),
   });
+  const [inputText, setInputText] = useState('Texto de ejemplo');
+  const [listValues, setListValues] = useState<readonly string[]>(['Valor 1', 'Valor 2']);
 
   const themes = [
     { name: 'Empresarial', className: 'theme-empresarial', desc: 'Diseño corporativo, azul formal con bordes limpios y tipografía Inter.' },
@@ -49,8 +52,8 @@ const ThemesShowcase = () => {
             <p style={{ margin: '4px 0 0', fontSize: '13px', color: 'var(--dp-text-secondary, #475569)' }}>{theme.desc}</p>
           </div>
           
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'center', marginTop: '8px' }}>
-            <div style={{ display: 'flex', gap: '8px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'flex-start', marginTop: '8px' }}>
+            <div style={{ display: 'flex', gap: '8px', width: '100%', marginBottom: '8px' }}>
               <Button label="Primario" variant="primary" />
               <Button label="Secundario" variant="secondary" />
               <Button label="Peligro" variant="danger" />
@@ -73,6 +76,26 @@ const ThemesShowcase = () => {
                 placeholder="Rango de fechas"
               />
             </div>
+
+            <div style={{ width: '280px' }}>
+              <Input
+                id={`input-theme-${theme.name}`}
+                label="Texto de Prueba"
+                value={inputText}
+                onChange={(val) => setInputText(val)}
+                placeholder="Escribe algo..."
+              />
+            </div>
+
+            <div style={{ width: '100%', maxWidth: '580px', marginTop: '12px' }}>
+              <InputList
+                id={`input-list-theme-${theme.name}`}
+                label="Arreglo de Entradas (Variante de Lista)"
+                values={listValues}
+                onChange={(newVals) => setListValues(newVals)}
+                placeholder="Elemento de lista..."
+              />
+            </div>
           </div>
         </div>
       ))}
@@ -83,3 +106,4 @@ const ThemesShowcase = () => {
 export const AllThemesComparison: StoryObj = {
   render: () => <ThemesShowcase />,
 };
+
