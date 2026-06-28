@@ -1,0 +1,225 @@
+/* Skeleton.css */
+
+/* Animación de pulso */
+@keyframes skeleton-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Animación de ola (wave/shimmer) */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Componente base de Skeleton */
+.custom-skeleton {
+  display: inline-block;
+  height: 1.2em;
+  width: 100%;
+  background: var(--skeleton-bg, #e2e8f0);
+  border-radius: var(--theme-border-radius, 4px);
+  vertical-align: middle;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Soporte para temas oscuros mediante variables del sistema */
+@media (prefers-color-scheme: dark) {
+  .custom-skeleton {
+    background: var(--skeleton-bg-dark, #2d3748);
+  }
+}
+
+/* Variantes de forma */
+.custom-skeleton--text {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+  height: 0.85em;
+  border-radius: 4px;
+}
+
+.custom-skeleton--circular {
+  border-radius: 50%;
+}
+
+.custom-skeleton--rectangular {
+  height: 100%;
+}
+
+/* Tipos de animación */
+.custom-skeleton--pulse {
+  animation: skeleton-pulse var(--skeleton-duration, 1.5s) ease-in-out infinite;
+}
+
+.custom-skeleton--wave {
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e2e8f0) 25%,
+    var(--skeleton-shimmer, #edf2f7) 37%,
+    var(--skeleton-bg, #e2e8f0) 63%
+  );
+  background-size: 400% 100%;
+  animation: skeleton-shimmer var(--skeleton-duration, 1.4s) ease-in-out infinite;
+}
+
+@media (prefers-color-scheme: dark) {
+  .custom-skeleton--wave {
+    background: linear-gradient(
+      90deg,
+      var(--skeleton-bg-dark, #2d3748) 25%,
+      var(--skeleton-shimmer-dark, #3a4659) 37%,
+      var(--skeleton-bg-dark, #2d3748) 63%
+    );
+    background-size: 400% 100%;
+  }
+}
+
+.custom-skeleton--none {
+  animation: none;
+}
+
+/* ==========================================
+   Modo Auto-detectable (Wrapper)
+   ========================================== *.custom-skeleton-wrapper--loading {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+/* Enmascarar textos, imágenes y botones dentro de la envoltura */
+.custom-skeleton-wrapper--loading p,
+.custom-skeleton-wrapper--loading h1,
+.custom-skeleton-wrapper--loading h2,
+.custom-skeleton-wrapper--loading h3,
+.custom-skeleton-wrapper--loading h4,
+.custom-skeleton-wrapper--loading h5,
+.custom-skeleton-wrapper--loading h6,
+.custom-skeleton-wrapper--loading span,
+.custom-skeleton-wrapper--loading button,
+.custom-skeleton-wrapper--loading a:not(:has(img)),
+.custom-skeleton-wrapper--loading input,
+.custom-skeleton-wrapper--loading textarea,
+.custom-skeleton-wrapper--loading label {
+  color: transparent !important;
+  background-color: var(--skeleton-bg, #e2e8f0) !important;
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e2e8f0) 25%,
+    var(--skeleton-shimmer, #edf2f7) 37%,
+    var(--skeleton-bg, #e2e8f0) 63%
+  ) !important;
+  background-size: 400% 100% !important;
+  border-color: transparent !important;
+  border-radius: var(--theme-border-radius, 4px) !important;
+  animation: skeleton-shimmer var(--skeleton-duration, 1.4s) ease-in-out infinite !important;
+  box-shadow: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .custom-skeleton-wrapper--loading p,
+  .custom-skeleton-wrapper--loading h1,
+  .custom-skeleton-wrapper--loading h2,
+  .custom-skeleton-wrapper--loading h3,
+  .custom-skeleton-wrapper--loading h4,
+  .custom-skeleton-wrapper--loading h5,
+  .custom-skeleton-wrapper--loading h6,
+  .custom-skeleton-wrapper--loading span,
+  .custom-skeleton-wrapper--loading button,
+  .custom-skeleton-wrapper--loading a:not(:has(img)),
+  .custom-skeleton-wrapper--loading input,
+  .custom-skeleton-wrapper--loading textarea,
+  .custom-skeleton-wrapper--loading label {
+    background-color: var(--skeleton-bg-dark, #2d3748) !important;
+    background-image: linear-gradient(
+      90deg,
+      var(--skeleton-bg-dark, #2d3748) 25%,
+      var(--skeleton-shimmer-dark, #3a4659) 37%,
+      var(--skeleton-bg-dark, #2d3748) 63%
+    ) !important;
+  }
+}
+
+/* Enmascarar imágenes */
+.custom-skeleton-wrapper--loading img {
+  content: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7") !important;
+  background-color: var(--skeleton-bg, #e2e8f0) !important;
+  background-image: linear-gradient(
+    90deg,
+    var(--skeleton-bg, #e2e8f0) 25%,
+    var(--skeleton-shimmer, #edf2f7) 37%,
+    var(--skeleton-bg, #e2e8f0) 63%
+  ) !important;
+  background-size: 400% 100% !important;
+  animation: skeleton-shimmer var(--skeleton-duration, 1.4s) ease-in-out infinite !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .custom-skeleton-wrapper--loading img {
+    background-color: var(--skeleton-bg-dark, #2d3748) !important;
+    background-image: linear-gradient(
+      90deg,
+      var(--skeleton-bg-dark, #2d3748) 25%,
+      var(--skeleton-shimmer-dark, #3a4659) 37%,
+      var(--skeleton-bg-dark, #2d3748) 63%
+    ) !important;
+  }
+}
+
+/* ==========================================
+   Modificadores de animación para el modo wrapper
+   ========================================== */
+
+/* Wrapper con animación pulse — sin gradiente, solo opacidad */
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse p,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse h1,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse h2,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse h3,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse h4,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse h5,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse h6,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse span,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse button,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse a:not(:has(img)),
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse input,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse textarea,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse label {
+  background-image: none !important;
+  animation: skeleton-pulse var(--skeleton-duration, 1.5s) ease-in-out infinite !important;
+}
+
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--pulse img {
+  background-image: none !important;
+  animation: skeleton-pulse var(--skeleton-duration, 1.5s) ease-in-out infinite !important;
+}
+
+/* Wrapper sin animación */
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none p,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none h1,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none h2,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none h3,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none h4,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none h5,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none h6,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none span,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none button,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none a:not(:has(img)),
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none input,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none textarea,
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none label {
+  animation: none !important;
+}
+
+.custom-skeleton-wrapper--loading.custom-skeleton-wrapper--none img {
+  animation: none !important;
+}
