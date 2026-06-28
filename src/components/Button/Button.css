@@ -1,0 +1,101 @@
+/* Botón base */
+.custom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--theme-font-family), system-ui, sans-serif;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--theme-border-radius);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  outline: none;
+}
+
+.custom-btn:focus-visible {
+  box-shadow: 0 0 0 3px var(--theme-primary-light);
+}
+
+/* Tamaños */
+.custom-btn--small {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+}
+
+.custom-btn--medium {
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+.custom-btn--large {
+  padding: 14px 28px;
+  font-size: 1.125rem;
+  /* El border-radius de tamaño grande se escala un poco en base al del tema */
+  border-radius: calc(var(--theme-border-radius) * 1.25);
+}
+
+/* Variantes */
+.custom-btn--primary {
+  background: var(--theme-primary-color);
+  color: var(--theme-primary-text);
+  box-shadow: var(--theme-shadow);
+}
+
+.custom-btn--primary:hover:not(:disabled) {
+  background: var(--theme-primary-hover);
+  transform: translateY(-1px);
+}
+
+.custom-btn--primary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.custom-btn--secondary {
+  background-color: var(--theme-bg-secondary);
+  border-color: var(--theme-border-color);
+  color: var(--theme-text-primary);
+}
+
+.custom-btn--secondary:hover:not(:disabled) {
+  background-color: var(--theme-primary-light);
+  border-color: var(--theme-primary-color);
+  color: var(--theme-primary-color);
+  transform: translateY(-1px);
+}
+
+.custom-btn--danger {
+  background: var(--theme-danger-color);
+  color: #ffffff;
+}
+
+.custom-btn--danger:hover:not(:disabled) {
+  background: var(--theme-danger-hover);
+  transform: translateY(-1px);
+}
+
+/* Estado Deshabilitado */
+.custom-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Spinner de carga */
+.custom-btn__spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: currentColor;
+  animation: custom-btn-spin 0.8s linear infinite;
+}
+
+@keyframes custom-btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
