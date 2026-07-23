@@ -1,0 +1,24 @@
+/* Tema: Empresarial (Azul Navy / Formal) */
+.theme-empresarial {
+  --theme-font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --theme-border-radius: 6px;
+  --theme-primary-color: #2563eb;
+  --theme-primary-hover: #1d4ed8;
+  --theme-primary-light: rgba(37, 99, 235, 0.1);
+  --theme-primary-text: #ffffff;
+  --theme-danger-color: #e11d48;
+  --theme-danger-hover: #be123c;
+  --theme-bg-secondary: #f8fafc;
+  --theme-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+  --theme-text-primary: #0f172a;
+  --theme-border-color: #e2e8f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .theme-empresarial {
+    --theme-primary-light: rgba(37, 99, 235, 0.2);
+    --theme-bg-secondary: #1e293b;
+    --theme-text-primary: #f8fafc;
+    --theme-border-color: #334155;
+  }
+}

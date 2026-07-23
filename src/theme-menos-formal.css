@@ -1,0 +1,24 @@
+/* Tema: Menos formal (Casual / Coral y Redondeado) */
+.theme-menos-formal {
+  --theme-font-family: 'Quicksand', 'Plus Jakarta Sans', sans-serif;
+  --theme-border-radius: 18px;
+  --theme-primary-color: #f43f5e;
+  --theme-primary-hover: #e11d48;
+  --theme-primary-light: rgba(244, 63, 94, 0.12);
+  --theme-primary-text: #ffffff;
+  --theme-danger-color: #f97316;
+  --theme-danger-hover: #ea580c;
+  --theme-bg-secondary: #fff5f6;
+  --theme-shadow: 0 8px 24px rgba(244, 63, 94, 0.2);
+  --theme-text-primary: #0f172a;
+  --theme-border-color: #ffe4e6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .theme-menos-formal {
+    --theme-primary-light: rgba(244, 63, 94, 0.2);
+    --theme-bg-secondary: #271216;
+    --theme-text-primary: #fff5f6;
+    --theme-border-color: #5c1d24;
+  }
+}
