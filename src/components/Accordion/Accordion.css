@@ -1,0 +1,177 @@
+.custom-accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--theme-font-family, var(--sans));
+  color: var(--theme-text-primary, var(--text));
+}
+
+/* --- Variantes Visuales --- */
+
+/* Bordered (por defecto) */
+.custom-accordion--bordered {
+  border: 1px solid var(--theme-border-color, var(--border));
+  border-radius: var(--theme-border-radius, 8px);
+  overflow: hidden;
+  background-color: var(--theme-bg-primary, var(--bg));
+}
+
+.custom-accordion--bordered .custom-accordion__item:not(:last-child) {
+  border-bottom: 1px solid var(--theme-border-color, var(--border));
+}
+
+/* Flush (sin bordes exteriores ni border-radius) */
+.custom-accordion--flush {
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.custom-accordion--flush .custom-accordion__item {
+  border-bottom: 1px solid var(--theme-border-color, var(--border));
+}
+
+/* Separated (tarjetas independientes) */
+.custom-accordion--separated {
+  gap: 12px;
+  background-color: transparent;
+}
+
+.custom-accordion--separated .custom-accordion__item {
+  border: 1px solid var(--theme-border-color, var(--border));
+  border-radius: var(--theme-border-radius, 8px);
+  background-color: var(--theme-bg-primary, var(--bg));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* --- Elemento Individual --- */
+.custom-accordion__item {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.custom-accordion__item--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* --- Header / Trigger Button --- */
+.custom-accordion__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  outline: none;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.custom-accordion__header:hover:not(:disabled) {
+  background-color: var(--theme-primary-light, rgba(99, 102, 241, 0.05));
+}
+
+.custom-accordion__header:focus-visible {
+  outline: 2px solid var(--theme-primary-color, #6366f1);
+  outline-offset: -2px;
+}
+
+.custom-accordion__header:disabled {
+  cursor: not-allowed;
+}
+
+/* --- Tamaños --- */
+.custom-accordion--small .custom-accordion__header {
+  padding: 10px 14px;
+}
+
+.custom-accordion--medium .custom-accordion__header {
+  padding: 14px 18px;
+}
+
+.custom-accordion--large .custom-accordion__header {
+  padding: 18px 24px;
+}
+
+/* Contenido del Título */
+.custom-accordion__title-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.custom-accordion--small .custom-accordion__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.custom-accordion--medium .custom-accordion__title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.custom-accordion--large .custom-accordion__title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.custom-accordion__subtitle {
+  font-size: 0.825rem;
+  color: var(--text, #6b6375);
+  font-weight: normal;
+}
+
+/* Chevron Indicator */
+.custom-accordion__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--theme-primary-color, var(--accent, #6366f1));
+}
+
+.custom-accordion__icon--expanded {
+  transform: rotate(180deg);
+}
+
+/* --- Panel de Contenido --- */
+.custom-accordion__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.custom-accordion__panel--expanded {
+  grid-template-rows: 1fr;
+}
+
+.custom-accordion__content-inner {
+  min-height: 0;
+  transition: opacity 0.25s ease-in-out;
+  opacity: 0;
+}
+
+.custom-accordion__panel--expanded .custom-accordion__content-inner {
+  opacity: 1;
+}
+
+.custom-accordion--small .custom-accordion__content-inner {
+  padding: 10px 14px 14px;
+}
+
+.custom-accordion--medium .custom-accordion__content-inner {
+  padding: 14px 18px 18px;
+}
+
+.custom-accordion--large .custom-accordion__content-inner {
+  padding: 18px 24px 24px;
+}
