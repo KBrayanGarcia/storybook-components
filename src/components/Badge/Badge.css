@@ -1,0 +1,174 @@
+.custom-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--theme-font-family, var(--sans));
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+  box-sizing: border-box;
+  transition: all 0.15s ease-in-out;
+  user-select: none;
+}
+
+/* --- Formas --- */
+.custom-badge--rounded {
+  border-radius: 6px;
+}
+
+.custom-badge--pill {
+  border-radius: 9999px;
+}
+
+/* --- Tamaños --- */
+.custom-badge--small {
+  padding: 2px 8px;
+  font-size: 0.75rem;
+}
+
+.custom-badge--medium {
+  padding: 4px 10px;
+  font-size: 0.825rem;
+}
+
+.custom-badge--large {
+  padding: 6px 14px;
+  font-size: 0.9rem;
+}
+
+/* --- Indicador Dot --- */
+.custom-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.custom-badge--small .custom-badge__dot {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-badge--large .custom-badge__dot {
+  width: 8px;
+  height: 8px;
+}
+
+/* --- Iconos --- */
+.custom-badge__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* --- Variantes y Apariencias --- */
+
+/* Neutral */
+.custom-badge--neutral.custom-badge--subtle {
+  background-color: var(--theme-bg-secondary, #f1f5f9);
+  color: var(--theme-text-primary, #475569);
+  border: 1px solid transparent;
+}
+
+.custom-badge--neutral.custom-badge--solid {
+  background-color: #64748b;
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+
+.custom-badge--neutral.custom-badge--outline {
+  background-color: transparent;
+  color: var(--theme-text-primary, #475569);
+  border: 1px solid var(--theme-border-color, #cbd5e1);
+}
+
+/* Primary */
+.custom-badge--primary.custom-badge--subtle {
+  background-color: var(--theme-primary-light, rgba(99, 102, 241, 0.12));
+  color: var(--theme-primary-color, #6366f1);
+  border: 1px solid transparent;
+}
+
+.custom-badge--primary.custom-badge--solid {
+  background-color: var(--theme-primary-color, #6366f1);
+  color: var(--theme-primary-text, #ffffff);
+  border: 1px solid transparent;
+}
+
+.custom-badge--primary.custom-badge--outline {
+  background-color: transparent;
+  color: var(--theme-primary-color, #6366f1);
+  border: 1px solid var(--theme-primary-color, #6366f1);
+}
+
+/* Success */
+.custom-badge--success.custom-badge--subtle {
+  background-color: rgba(34, 197, 94, 0.12);
+  color: #166534;
+  border: 1px solid transparent;
+}
+
+.custom-badge--success.custom-badge--solid {
+  background-color: #22c55e;
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+
+.custom-badge--success.custom-badge--outline {
+  background-color: transparent;
+  color: #15803d;
+  border: 1px solid #22c55e;
+}
+
+/* Warning */
+.custom-badge--warning.custom-badge--subtle {
+  background-color: rgba(245, 158, 11, 0.14);
+  color: #92400e;
+  border: 1px solid transparent;
+}
+
+.custom-badge--warning.custom-badge--solid {
+  background-color: #f59e0b;
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+
+.custom-badge--warning.custom-badge--outline {
+  background-color: transparent;
+  color: #b45309;
+  border: 1px solid #f59e0b;
+}
+
+/* Danger */
+.custom-badge--danger.custom-badge--subtle {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #991b1b;
+  border: 1px solid transparent;
+}
+
+.custom-badge--danger.custom-badge--solid {
+  background-color: var(--theme-danger-color, #ef4444);
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+
+.custom-badge--danger.custom-badge--outline {
+  background-color: transparent;
+  color: var(--theme-danger-color, #ef4444);
+  border: 1px solid var(--theme-danger-color, #ef4444);
+}
+
+/* Interactivo (si tiene onClick) */
+.custom-badge--clickable {
+  cursor: pointer;
+}
+
+.custom-badge--clickable:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}

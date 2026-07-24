@@ -58,6 +58,7 @@
     --theme-primary-text: #ffffff;
     --theme-danger-color: #ef4444;
     --theme-danger-hover: #dc2626;
+    --theme-bg-primary: #ffffff;
     --theme-bg-secondary: #f8fafc;
     --theme-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
     --theme-text-primary: #0f172a;
@@ -67,6 +68,7 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --theme-primary-light: rgba(99, 102, 241, 0.2);
+        --theme-bg-primary: #0f172a;
         --theme-bg-secondary: #1e293b;
         --theme-text-primary: #f8fafc;
         --theme-border-color: #334155;
