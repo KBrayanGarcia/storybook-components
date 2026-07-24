@@ -8,6 +8,7 @@
   --theme-primary-text: #ffffff;
   --theme-danger-color: #e11d48;
   --theme-danger-hover: #be123c;
+  --theme-bg-primary: #ffffff;
   --theme-bg-secondary: #f8fafc;
   --theme-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
   --theme-text-primary: #0f172a;
@@ -17,6 +18,7 @@
 @media (prefers-color-scheme: dark) {
   .theme-empresarial {
     --theme-primary-light: rgba(37, 99, 235, 0.2);
+    --theme-bg-primary: #0f172a;
     --theme-bg-secondary: #1e293b;
     --theme-text-primary: #f8fafc;
     --theme-border-color: #334155;

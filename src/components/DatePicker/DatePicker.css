@@ -1,10 +1,10 @@
 /* Paleta de colores e integración con el sistema de temas */
 .datepicker-container {
   --dp-font-family: var(--theme-font-family);
-  --dp-bg-primary: #ffffff;
+  --dp-bg-primary: var(--theme-bg-primary, #ffffff);
   --dp-bg-secondary: var(--theme-bg-secondary);
-  --dp-border-color: #e2e8f0;
-  --dp-text-primary: #0f172a;
+  --dp-border-color: var(--theme-border-color, #e2e8f0);
+  --dp-text-primary: var(--theme-text-primary, #0f172a);
   --dp-text-secondary: #475569;
   --dp-text-muted: #94a3b8;
   
@@ -28,9 +28,9 @@
 /* Soporte para modo oscuro */
 @media (prefers-color-scheme: dark) {
   .datepicker-container {
-    --dp-bg-primary: #0f172a;
-    --dp-border-color: #334155;
-    --dp-text-primary: #f8fafc;
+    --dp-bg-primary: var(--theme-bg-primary, #0f172a);
+    --dp-border-color: var(--theme-border-color, #334155);
+    --dp-text-primary: var(--theme-text-primary, #f8fafc);
     --dp-text-secondary: #cbd5e1;
     --dp-text-muted: #64748b;
   }
