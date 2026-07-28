@@ -13,6 +13,11 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 export default defineConfig({
   plugins: [react()],
   test: {
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'lcov', 'json', 'html'],
+      reportsDirectory: './coverage',
+    },
     projects: [{
       extends: true,
       plugins: [
