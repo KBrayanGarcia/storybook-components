@@ -67,45 +67,39 @@ jobs:
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_SHA: ${{ github.sha }}
+          REPO: ${{ github.repository }}
         run: |
-          COMMIT_SHA="${{ github.sha }}"
-          REPO="${{ github.repository }}"
-
           echo "⏳ Esperando que SonarCloud publique el Quality Gate en GitHub..."
 
           for i in $(seq 1 36); do
             sleep 10
             echo "  Verificando intento $i/36..."
 
+            API_URL="https://api.github.com/repos/${REPO}/commits/${COMMIT_SHA}/check-runs"
+
             RESULT=$(curl -sf \
-              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Authorization: Bearer ${GITHUB_TOKEN}" \
               -H "Accept: application/vnd.github+json" \
-              "https://api.github.com/repos/$REPO/commits/$COMMIT_SHA/check-runs" | \
-              python3 -c "
-import sys, json
-data = json.load(sys.stdin)
-runs = data.get('check_runs', [])
-sonar = [r for r in runs if 'sonar' in r.get('name', '').lower() or 'sonar' in str(r.get('app', {})).lower()]
-if not sonar:
-    print('pending')
-else:
-    run = sonar[0]
-    status = run.get('status', 'queued')
-    conclusion = run.get('conclusion') or ''
-    if status != 'completed':
-        print('pending')
-    elif conclusion == 'success':
-        print('success')
-    else:
-        print('failure')
-")
+              "${API_URL}" | \
+              jq -r '
+                [.check_runs[] | select(.name | ascii_downcase | contains("sonar"))] |
+                if length == 0 then "pending"
+                else
+                  .[0] |
+                  if .status != "completed" then "pending"
+                  elif .conclusion == "success" then "success"
+                  else "failure"
+                  end
+                end
+              ')
 
-            echo "  Estado Quality Gate: $RESULT"
+            echo "  Estado Quality Gate: ${RESULT}"
 
-            if [[ "$RESULT" == "success" ]]; then
+            if [[ "${RESULT}" == "success" ]]; then
               echo "✅ Quality Gate aprobado"
               exit 0
-            elif [[ "$RESULT" == "failure" ]]; then
+            elif [[ "${RESULT}" == "failure" ]]; then
               echo "❌ Quality Gate falló — revisa SonarCloud para más detalles"
               exit 1
             fi
@@ -113,4 +107,3 @@ else:
 
           echo "⚠️ Timeout: SonarCloud no publicó el resultado en 6 minutos"
           exit 1
-
