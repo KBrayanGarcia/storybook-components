@@ -70,7 +70,11 @@ jobs:
           COMMIT_SHA: ${{ github.sha }}
           REPO: ${{ github.repository }}
         run: |
+          # Leer la URL del dashboard generada por el scanner
+          DASHBOARD_URL=$(grep '^dashboardUrl=' .scannerwork/report-task.txt | cut -d'=' -f2-)
+
           echo "⏳ Esperando que SonarCloud publique el Quality Gate en GitHub..."
+          echo "🔗 Dashboard: ${DASHBOARD_URL}"
 
           for i in $(seq 1 36); do
             sleep 10
@@ -98,12 +102,15 @@ jobs:
 
             if [[ "${RESULT}" == "success" ]]; then
               echo "✅ Quality Gate aprobado"
+              echo "🔗 Ver detalles: ${DASHBOARD_URL}"
               exit 0
             elif [[ "${RESULT}" == "failure" ]]; then
-              echo "❌ Quality Gate falló — revisa SonarCloud para más detalles"
+              echo "❌ Quality Gate falló"
+              echo "🔗 Ver detalles en SonarCloud: ${DASHBOARD_URL}"
               exit 1
             fi
           done
 
           echo "⚠️ Timeout: SonarCloud no publicó el resultado en 6 minutos"
+          echo "🔗 Revisa manualmente: ${DASHBOARD_URL}"
           exit 1
