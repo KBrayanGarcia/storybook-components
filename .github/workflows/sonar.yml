@@ -62,7 +62,55 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
-        with:
-          args: >-
-            -Dsonar.qualitygate.wait=true
+
+      - name: Esperar Quality Gate de SonarCloud
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          COMMIT_SHA="${{ github.sha }}"
+          REPO="${{ github.repository }}"
+
+          echo "⏳ Esperando que SonarCloud publique el Quality Gate en GitHub..."
+
+          for i in $(seq 1 36); do
+            sleep 10
+            echo "  Verificando intento $i/36..."
+
+            RESULT=$(curl -sf \
+              -H "Authorization: Bearer $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$REPO/commits/$COMMIT_SHA/check-runs" | \
+              python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+runs = data.get('check_runs', [])
+sonar = [r for r in runs if 'sonar' in r.get('name', '').lower() or 'sonar' in str(r.get('app', {})).lower()]
+if not sonar:
+    print('pending')
+else:
+    run = sonar[0]
+    status = run.get('status', 'queued')
+    conclusion = run.get('conclusion') or ''
+    if status != 'completed':
+        print('pending')
+    elif conclusion == 'success':
+        print('success')
+    else:
+        print('failure')
+")
+
+            echo "  Estado Quality Gate: $RESULT"
+
+            if [[ "$RESULT" == "success" ]]; then
+              echo "✅ Quality Gate aprobado"
+              exit 0
+            elif [[ "$RESULT" == "failure" ]]; then
+              echo "❌ Quality Gate falló — revisa SonarCloud para más detalles"
+              exit 1
+            fi
+          done
+
+          echo "⚠️ Timeout: SonarCloud no publicó el resultado en 6 minutos"
+          exit 1
 
