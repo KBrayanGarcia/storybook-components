@@ -2,6 +2,8 @@ name: SonarCloud Analysis
 
 on:
   push:
+    branches:
+      - main  # Solo analizar en main (plan gratuito no soporta otras ramas)
   pull_request:
     types: [opened, synchronize, reopened]
 
