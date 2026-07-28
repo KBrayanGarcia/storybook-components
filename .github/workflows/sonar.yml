@@ -56,6 +56,50 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
-        with:
-          args: >-
-            -Dsonar.qualitygate.wait=true
+
+      - name: Verificar Quality Gate de SonarCloud
+        shell: bash
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          REPORT=".scannerwork/report-task.txt"
+
+          if [ ! -f "$REPORT" ]; then
+            echo "❌ No se encontró report-task.txt"
+            exit 1
+          fi
+
+          # Extraer la URL del CE task (manejar el escape de '://')
+          CE_TASK_URL=$(grep "^ceTaskUrl=" "$REPORT" | cut -d'=' -f2- | sed 's/\\:/:/g')
+          echo "🔍 Consultando tarea: $CE_TASK_URL"
+
+          # Esperar hasta que el análisis finalice (max ~5 min)
+          for i in $(seq 1 30); do
+            RESPONSE=$(curl -sf -u "$SONAR_TOKEN:" "$CE_TASK_URL")
+            STATUS=$(echo "$RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['task']['status'])")
+            echo "  Intento $i/30 — Estado: $STATUS"
+
+            if [[ "$STATUS" == "SUCCESS" || "$STATUS" == "FAILED" || "$STATUS" == "CANCELLED" ]]; then
+              break
+            fi
+            sleep 10
+          done
+
+          if [[ "$STATUS" != "SUCCESS" ]]; then
+            echo "❌ El análisis de SonarCloud terminó con estado: $STATUS"
+            exit 1
+          fi
+
+          # Obtener analysisId y verificar Quality Gate
+          ANALYSIS_ID=$(echo "$RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['task']['analysisId'])")
+          QG_RESPONSE=$(curl -sf -u "$SONAR_TOKEN:" "https://sonarcloud.io/api/qualitygates/project_status?analysisId=$ANALYSIS_ID")
+          QG_STATUS=$(echo "$QG_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin)['projectStatus']['status'])")
+
+          echo "🎯 Quality Gate: $QG_STATUS"
+
+          if [[ "$QG_STATUS" != "OK" ]]; then
+            echo "❌ Quality Gate falló — revisa SonarCloud para más detalles"
+            exit 1
+          fi
+
+          echo "✅ Quality Gate aprobado correctamente"
