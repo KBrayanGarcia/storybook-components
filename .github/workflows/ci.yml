@@ -1,13 +1,51 @@
-name: CI
+name: CI & Code Quality
 
 on:
-  push:
-    branches-ignore:
-      - main  # main lo maneja sonar.yml
   pull_request:
+    branches:
+      - main
+      - pruebas
     types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+      - pruebas
 
 jobs:
-  test:
-    name: Tests
-    uses: ./.github/workflows/_tests.yml
+  ci:
+    name: Test & SonarCloud Scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      statuses: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Tests and Generate Coverage
+        run: npm run test:coverage
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+
