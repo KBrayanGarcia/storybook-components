@@ -20,10 +20,19 @@ export default defineConfig({
       include: ['src/**/*.{ts,tsx}'],
       exclude: [
         'src/**/*.stories.{ts,tsx}',
+        'src/**/*.types.{ts,tsx}',
+        'src/**/index.ts',
         'src/test/**',
         'src/main.tsx',
-        'src/vite-env.d.ts'
+        'src/vite-env.d.ts',
+        'src/App.tsx'
       ],
+      thresholds: {
+        lines: 55,
+        functions: 45,
+        branches: 55,
+        statements: 55,
+      },
     },
     projects: [
       {
