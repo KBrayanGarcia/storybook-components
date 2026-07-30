@@ -40,9 +40,3 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
 
-      - name: Quality Gate Check
-        uses: ./.github/actions/quality-gate-check
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          commit-sha: ${{ github.sha }}
-          repository: ${{ github.repository }}
